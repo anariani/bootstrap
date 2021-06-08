@@ -272,7 +272,7 @@ class Tooltip extends BaseComponent {
 
     tip.classList.add(CLASS_NAME_SHOW)
 
-    const customClass = typeof this._config.customClass === 'function' ? this._config.customClass() : this._config.customClass
+    const customClass = this._parseContent(this._config.customClass)
     if (customClass) {
       tip.classList.add(...customClass.split(' '))
     }
@@ -413,11 +413,11 @@ class Tooltip extends BaseComponent {
       return
     }
 
-    if (this._config.html) {
-      if (this._config.sanitize) {
-        content = sanitizeHtml(content, this._config.allowList, this._config.sanitizeFn)
-      }
+    if (this._config.sanitize) {
+      content = sanitizeHtml(content, this._config.allowList, this._config.sanitizeFn)
+    }
 
+    if (this._config.html) {
       element.innerHTML = content
     } else {
       element.textContent = content
